@@ -8,7 +8,7 @@ module.exports = {
 
 
         try {
-            const results = await db.getUser([username])
+            const results = await db.user.find_user_by_username([username])
             const existingUser = results[0]
 
             if(existingUser){
@@ -44,7 +44,7 @@ module.exports = {
 
     login: async(req, res) => {
         const {username, password} = req.body
-        const foundUser = await req.app.get('db').find_user_by_username([username])
+        const foundUser = await req.app.get('db').user.find_user_by_username([username])
 
         const user = foundUser[0]
 
@@ -52,7 +52,7 @@ module.exports = {
             return res.status(403).send('Username does not exist.')
         }
 
-        const isAuthenticated = bcrypt.compareSync(password, user.hash)
+        const isAuthenticated = bcrypt.compareSync(password, user.password)
 
         if (!isAuthenticated) {
             return res.status(403).send('Incorrect password');
