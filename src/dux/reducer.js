@@ -1,13 +1,11 @@
-import axios from 'axios'
-
 
 const initialState = {
     username: '',
     profile_pic: ''
 }
 
-UPDATE_USER = 'UPDATE_USER'
-LOGOUT_USER = 'LOGOUT_USER'
+const UPDATE_USER = 'UPDATE_USER'
+const LOGOUT_USER = 'LOGOUT_USER'
 
 export const updateUser = (username, profile_pic) => {
     // let respData = axios.get('/auth/user-data').then(res => res.data)
