@@ -23,7 +23,7 @@ class Nav extends Component {
 
   getUser() {
     axios.get('/api/auth/me')
-    .then(res => this.updateUser(res.data))
+    .then(res => updateUser(res.data))
   }
   
   logout() {
@@ -33,11 +33,11 @@ class Nav extends Component {
   
   render() {
     // console.log(store.getState().users.profile_pic)
-    const {REDUX_STATE_PIC} = store.users.profile_pic
+    // const {REDUX_STATE_PIC} = store.users.profile_pic
       return this.props.location.pathname !== '/' &&
         <div className='nav'>
           <div className='nav-profile-container'>
-            <div className='nav-profile-pic' style={{backgroundImage: `url(${REDUX_STATE_PIC})`}}></div>
+            <div className='nav-profile-pic' style={{backgroundImage: `url(${this.state.profile_pic})`}}></div>
             <p>{this.state.username}</p>
           </div>
           <div className='nav-links'>

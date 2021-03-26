@@ -7,7 +7,7 @@ function App() {
   return (
     <div className='App'>
       {routes}
-      {Nav}
+      {/* <Nav/> */}
     </div>
   )
 };
