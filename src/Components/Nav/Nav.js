@@ -7,6 +7,7 @@ import './Nav.css';
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {updateUser, logout} from '../../dux/reducer'
+import store from '../../dux/store'
 
 class Nav extends Component {
   constructor(props) {
@@ -31,8 +32,8 @@ class Nav extends Component {
   }
   
   render() {
-    console.log(this.props)
-    const {REDUX_STATE_PIC} = this.state.profile_pic
+    // console.log(store.getState().users.profile_pic)
+    const {REDUX_STATE_PIC} = store.users.profile_pic
       return this.props.location.pathname !== '/' &&
         <div className='nav'>
           <div className='nav-profile-container'>

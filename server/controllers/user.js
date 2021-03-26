@@ -20,7 +20,7 @@ module.exports = {
             const {profile_pic} = `https://robohash.org/${username}.png`
 
             //add the user to the db and get back their id
-            const registeredUser = await db.create_user([username, hash, profile_pic])
+            const registeredUser = await db.user.create_user([username, hash, profile_pic])
             //create a session for the user using the db response
             const user = registeredUser[0];
             req.session.user = {
