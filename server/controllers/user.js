@@ -8,8 +8,8 @@ module.exports = {
 
 
         try {
-            const results = await db.user.find_user_by_username([username])
-            const existingUser = results[0]
+            const result = await db.user.find_user_by_username([username])
+            const existingUser = result[0]
 
             if(existingUser){
                 return res.status(409).send('Username exists already')
@@ -47,35 +47,40 @@ module.exports = {
         const foundUser = await req.app.get('db').user.find_user_by_username([username])
 
         const user = foundUser[0]
+        console.log(user, 'user')
 
         if(!user){
-            return res.status(403).send('Username does not exist.')
+            return res.status(401).send('Username does not exist.')
         }
 
-        const isAuthenticated = bcrypt.compareSync(password, user.password)
+        const isAuthenticated = bcrypt.compareSync(password, user.password);
 
         if (!isAuthenticated) {
             return res.status(403).send('Incorrect password');
           }
+          
         req.session.user = {
             id: user.id,
             username: user.username,
             profile_pic: user.profile_pic
         }
+        console.log(req.session, 'session')
         return res.send(req.session.user)
+        
 
+    },
+
+    logout: (req, res) => {
+        req.session.destroy();
+        return res.sendStatus(200)
     },
 
     getUser: (req, res) => {
         if(req.session.user){
             return res.send(req.session.user)
         }
-        return res.status(404).send('no user logged in')
-    },
-
-
-    logout: async(req, res) => {
-        req.session.destroy();
-        return res.sendStatus(200)
+        return res.status(404).send('no user is logged in')
     }
+
+
 }

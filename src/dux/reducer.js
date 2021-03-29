@@ -7,27 +7,35 @@ const initialState = {
 const UPDATE_USER = 'UPDATE_USER'
 const LOGOUT_USER = 'LOGOUT_USER'
 
-export const updateUser = (username, profile_pic) => {
+export function updateUser(currentUser) {
     // let respData = axios.get('/auth/user-data').then(res => res.data)
+    console.log(currentUser, 'updateUser')
     return {
         type: UPDATE_USER,
-        payload: {username, profile_pic}
+        payload: {
+            username: currentUser.username,
+            profile_pic: currentUser.profile_pic
+        }
+        
     }
 }
 
-export const logout = () => {
+export function logout() {
     return {
         type: LOGOUT_USER,
+
 
     }
 }
 
 export default function reducer(state = initialState, action){
+    console.log(action, 'action')
     switch(action.type){
+        
         case UPDATE_USER:
             return {
-                username: state.username,
-                profile_pic: state.profile_pic
+                username: action.payload.username,
+                profile_pic: action.payload.profile_pic
             }
         case LOGOUT_USER:
             return initialState;

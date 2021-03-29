@@ -1,5 +1,8 @@
 module.exports = {
     readPosts: async (req, res) => {
+      // console.log('request on posts', req)
+      // console.log('response on posts', res)
+      console.log('req session for readposts', req.session)
       let { id } = req.session.user;
       let { mine, search, oldest } = req.query;
       const db = await req.app.get('db')
@@ -39,16 +42,19 @@ module.exports = {
     },
     createPost: (req, res) => {
       //code here
-      const {id} = req.session.user.id
-      const{title, img, content} = req.body
-      const {date} = new Date;
       const db = req.app.get('db')
+      console.log('req session for create post', req.session)
+      const {id} = req.session.user
+      const {title, img, content} = req.body
+      const {date} = new Date;
 
       if(id){
-        db.create_post([id, title, img, content, date])
-        res.status(200)
+        db.post.create_post([id, title, img, content, date])
+        res.sendStatus(200)
       }
-      res.status(403)
+      else {
+         res.status(403)
+      }
 
 
     },

@@ -3,7 +3,7 @@ import axios from 'axios';
 import logo from './../../assets/helo_logo.png';
 import './Auth.css';
 import {connect} from 'react-redux'
-import updateUser from '../../dux/reducer'
+import {updateUser} from '../../dux/reducer'
 
 
 class Auth extends Component {
@@ -28,11 +28,12 @@ class Auth extends Component {
     axios.post('/api/auth/login', this.state)
       .then(res => {
         //code here
-        this.props.history.push('/dash')
-        this.updateUser({
-          username: this.state.username,
-          profile_pic: this.state.username
+        console.log(res.data)
+        this.props.updateUser({
+          username: res.data.username,
+          profile_pic: res.data.profile_pic
         })
+        this.props.history.push('/dash')
       })
       .catch(err => {
         console.log(err)
@@ -45,9 +46,9 @@ class Auth extends Component {
       .then(res => {
         //code here
         this.props.history.push('/dash')
-        this.updateUser({
+        this.props.updateUser({
           username: this.state.username,
-          profile_pic: this.state.username
+          profile_pic: this.state.profile_pic
         })
       })
       .catch(err => {

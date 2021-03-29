@@ -4,6 +4,7 @@ const express = require('express'),
 userCtrl = require('./controllers/user'),
 postCtrl = require('./controllers/posts')
 const session = require('express-session')
+// const FileStore = require('session-file-store')(session);
 const app = express();
 
 app.use(express.json());
@@ -11,11 +12,12 @@ app.use(express.json());
 const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env
 
 app.use(session({
+    // store: new FileStore,
     secret: SESSION_SECRET,
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24
+        maxAge: 1000 * 60 * 60 * 24 * 14
     }
 }))
 
